@@ -3,3 +3,28 @@
 body {
   font-family: "Roboto", sans-serif;
 }
+.card {
+  border-radius: 10px;
+}
+
+.card .card-left {
+  width: 25%;
+  height: 100%;
+}
+
+.card .card-left img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.card .card-right {
+  width: 100%;
+}
+
+.card .card-right ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
