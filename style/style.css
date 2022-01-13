@@ -9,7 +9,6 @@ body {
 
 .card .card-left {
   width: 25%;
-  height: 100%;
 }
 
 .card .card-left img {
@@ -29,7 +28,7 @@ body {
   padding: 0;
 }
 
-.card-right .card-links a{
+.card-right .card-links a {
   border-radius: 5px;
-  padding:8px 10px
+  padding: 8px 10px;
 }
