@@ -4,7 +4,7 @@ body {
   font-family: "Roboto", sans-serif;
 }
 .card {
-  border-radius: 10px;
+  border-radius: 15px;
 }
 
 .card .card-left {
@@ -27,4 +27,9 @@ body {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.card-right .card-links a{
+  border-radius: 5px;
+  padding:8px 10px
 }
