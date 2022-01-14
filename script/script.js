@@ -6,10 +6,11 @@ const Reddit = new RedditAPI();
 // DOM
 const $cardsSection = document.querySelector(".cards-section");
 const $postCards = document.querySelector(".post-cards");
+const $cardLoading = document.querySelector(".card-loading");
 const $subredditInput = document.querySelector(".subreddit-input");
 const $sortSelect = document.querySelector(".sort-select");
 const $intervalInput = document.querySelector(".interval-input");
-const $cardLoading = document.querySelector(".card-loading");
+const $settingsForm = document.querySelector(".settings-form");
 
 function getPostTemplate(post) {
   // extract details
@@ -141,7 +142,6 @@ function sleep(time) {
 
 async function fetchAndShowUpdate() {
   // fetch post
-  // start loading
   const subPosts = await Reddit.fetchSubredditPosts(subreddit, {
     sort,
     limit: 5,
@@ -157,10 +157,11 @@ async function fetchAndShowUpdate() {
     filteredPromotional.postIds,
     filteredPromotional.posts
   );
+
   //select first post
   const postToShow = posts[postIds[0]];
 
-  // TODO: check if it is new post
+  // check if it is new post
   const alreadyShowed = (showedPosts[subreddit] || []).includes(postToShow.id);
 
   if (!alreadyShowed) {
@@ -181,10 +182,14 @@ async function fetchAndShowUpdate() {
   // remove loading
   $cardLoading.classList.add("d-none");
 }
+
+let intervalTimer = null;
 async function startUpdatesInterval() {
+  // To clear all previous intervals
+  clearInterval(intervalTimer);
   await fetchAndShowUpdate();
 
-  setInterval(async () => {
+  intervalTimer = setInterval(async () => {
     await fetchAndShowUpdate();
   }, interval * 60000);
 }
@@ -199,7 +204,8 @@ if (!localStorage.getItem("settings")) {
   localStorage.setItem("settings", defaultSettings);
 }
 
-const { subreddit, sort, interval } = JSON.parse(
+// state
+let { subreddit, sort, interval } = JSON.parse(
   localStorage.getItem("settings")
 );
 
@@ -217,8 +223,33 @@ setTimeout(() => {
   ) {
     // Still loading and no post cards on page
     $cardLoading.classList.add("d-none");
-    $postCards.insertAdjacentHTML('afterbegin', Components.fatalErrorAlert());
+    $postCards.insertAdjacentHTML("afterbegin", Components.fatalErrorAlert());
   }
 }, 10000);
+
+// Update settings
+$settingsForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const subredditName = $settingsForm.subredditName.value;
+  const sortType = $settingsForm.sortType.value;
+  const updatesInterval = parseInt($settingsForm.updatesInterval.value);
+
+  // TODO: validation
+
+  const newSettings = JSON.stringify({
+    subreddit: subredditName,
+    sort: sortType,
+    interval: updatesInterval, //in minutes
+  });
+  localStorage.setItem("settings", newSettings);
+
+  // update state
+  subreddit = subredditName;
+  sort = sortType;
+  interval = updatesInterval;
+
+  // start new setInterval
+  startUpdatesInterval();
+});
 
 startUpdatesInterval();
