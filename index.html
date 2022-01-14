@@ -81,39 +81,62 @@
 
         <!-- right settings section -->
         <section class="settings col-md-3 mt-4">
-          <!-- update sub input -->
-          <div class="input-group input-group mb-3">
-            <span
-              class="input-group-text fw-bold rounded-start"
-              id="inputGroup-sizing-default"
-              >r/</span
+          <form action="#" class="settings-form">
+            <!-- update sub input -->
+            <div class="input-group input-group mb-3">
+              <span
+                class="input-group-text fw-bold rounded-start"
+                id="inputGroup-sizing-default"
+                >r/</span
+              >
+              <input
+                type="text"
+                name="subredditName"
+                class="form-control subreddit-input"
+                placeholder="subreddit name"
+                aria-label="subreddit name"
+                aria-describedby="button-addon2"
+              />
+            </div>
+
+            <!-- update sort type -->
+            <select
+              class="form-select rounded sort-select mb-3"
+              aria-label=".form-select-sm example"
+              name="sortType"
             >
-            <input
-              type="text"
-              class="form-control subreddit-input"
-              placeholder="subreddit name"
-              aria-label="subreddit name"
-              aria-describedby="button-addon2"
-            />
+              <option selected>Select sort type</option>
+              <option value="new">new</option>
+              <option value="hot">hot</option>
+              <option value="rising">rising</option>
+            </select>
+
+            <!-- update interval time -->
+            <div class="input-group input-group mb-3">
+              <input
+                type="number"
+                class="form-control interval-input"
+                placeholder="get updates every?"
+                aria-label="get updates every?"
+                aria-describedby="button-addon2"
+                name="updatesInterval"
+              />
+              <span
+                class="input-group-text rounded-end"
+                id="inputGroup-sizing-default"
+                >minutes</span
+              >
+            </div>
+
+            <!-- update settings button -->
             <button
-              class="btn btn-outline-secondary rounded-end subreddit-input-btn"
+              class="btn btn-primary rounded update-settings fw-bold"
               type="button"
               id="button-addon2"
             >
-              update
+              Update
             </button>
-          </div>
-
-          <!-- update sort type -->
-          <select
-            class="form-select rounded sort-select"
-            aria-label=".form-select-sm example"
-          >
-            <option selected>Select sort type</option>
-            <option value="new">new</option>
-            <option value="hot">hot</option>
-            <option value="rising">rising</option>
-          </select>
+          </form>
         </section>
       </div>
     </div>
