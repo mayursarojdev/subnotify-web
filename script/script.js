@@ -215,11 +215,13 @@ if (!getSettings()) {
   updateSettings(defaultSettings);
 }
 
-//update settings input dom with saved settings
-$subredditInput.value = subreddit;
-$sortSelect.value = sort;
-$intervalInput.value = interval;
+// state
+let { subreddit, sort, interval } = getSettings();
+let intervalTimer = null;
+// For tracking posts
+const showedPosts = {};
 
+// Event listeners
 // On update settings
 $settingsForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -248,11 +250,10 @@ $settingsForm.addEventListener("submit", (e) => {
   startUpdatesInterval();
 });
 
-// state
-let { subreddit, sort, interval } = getSettings();
-let intervalTimer = null;
-// For tracking posts
-const showedPosts = {};
+//update settings input dom with saved settings
+$subredditInput.value = subreddit;
+$sortSelect.value = sort;
+$intervalInput.value = interval;
 
 // Check if reddit response error
 setTimeout(() => {
