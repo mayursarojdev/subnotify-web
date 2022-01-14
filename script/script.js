@@ -120,9 +120,16 @@ async function fetchAndShowUpdate() {
   const postToShow = posts[postIds[0]];
 
   // TODO: check if it is new post
+  const alreadyShowed = (showedPosts[subreddit] || []).includes(postToShow.id);
 
-  // Insert into dom
-  $cardsSection.insertAdjacentHTML("afterbegin", getPostTemplate(postToShow));
+  if (!alreadyShowed) {
+    // Insert into dom
+    $cardsSection.insertAdjacentHTML("afterbegin", getPostTemplate(postToShow));
+
+    // add it to showedPosts
+    if (!showedPosts[subreddit]) showedPosts[subreddit] = [];
+    showedPosts[subreddit].push(postToShow.id);
+  }else console.log('No new updates available');
 }
 async function startUpdatesInterval() {
   await fetchAndShowUpdate();
@@ -150,5 +157,7 @@ const { subreddit, sort, interval } = JSON.parse(
 $subredditInput.value = subreddit;
 $sortSelect.value = sort;
 $intervalInput.value = interval;
+
+const showedPosts = {};
 
 startUpdatesInterval();
