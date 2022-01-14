@@ -236,6 +236,10 @@ setTimeout(() => {
 }, 10000);
 
 // On update settings
+function settingsUpdateSuccess() {
+  // TODO: Success toast
+  console.log("Settings update successful");
+}
 $settingsForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const subredditName = $settingsForm.subredditName.value;
@@ -255,6 +259,9 @@ $settingsForm.addEventListener("submit", (e) => {
   subreddit = subredditName;
   sort = sortType;
   interval = updatesInterval;
+
+  // settings update successful
+  settingsUpdateSuccess();
 
   // start new setInterval
   startUpdatesInterval();
