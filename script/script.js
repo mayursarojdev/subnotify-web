@@ -194,27 +194,35 @@ async function startUpdatesInterval() {
   }, interval * 60000);
 }
 
+// setting functions
+function updateSettings(settings) {
+  localStorage.setItem("settings", JSON.stringify(settings));
+}
+function getSettings() {
+  return JSON.parse(localStorage.getItem("settings"));
+}
+
 // set default settings if not set
-if (!localStorage.getItem("settings")) {
-  const defaultSettings = JSON.stringify({
+if (!getSettings()) {
+  const defaultSettings = {
     subreddit: "technology",
     sort: "new",
     interval: 2, //in minutes
-  });
-  localStorage.setItem("settings", defaultSettings);
+  };
+  updateSettings(defaultSettings);
 }
 
 // state
-let { subreddit, sort, interval } = JSON.parse(
-  localStorage.getItem("settings")
-);
+let { subreddit, sort, interval } = getSettings();
 
 //update settings input dom with saved settings
 $subredditInput.value = subreddit;
 $sortSelect.value = sort;
 $intervalInput.value = interval;
 
+// For tracking posts
 const showedPosts = {};
+
 // Check if reddit response error
 setTimeout(() => {
   if (
@@ -227,7 +235,7 @@ setTimeout(() => {
   }
 }, 10000);
 
-// Update settings
+// On update settings
 $settingsForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const subredditName = $settingsForm.subredditName.value;
@@ -236,12 +244,12 @@ $settingsForm.addEventListener("submit", (e) => {
 
   // TODO: validation
 
-  const newSettings = JSON.stringify({
+  const newSettings = {
     subreddit: subredditName,
     sort: sortType,
     interval: updatesInterval, //in minutes
-  });
-  localStorage.setItem("settings", newSettings);
+  };
+  updateSettings(newSettings);
 
   // update state
   subreddit = subredditName;
