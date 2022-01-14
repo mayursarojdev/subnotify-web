@@ -183,7 +183,6 @@ async function fetchAndShowUpdate() {
   $cardLoading.classList.add("d-none");
 }
 
-let intervalTimer = null;
 async function startUpdatesInterval() {
   // To clear all previous intervals
   clearInterval(intervalTimer);
@@ -201,6 +200,10 @@ function updateSettings(settings) {
 function getSettings() {
   return JSON.parse(localStorage.getItem("settings"));
 }
+function settingsUpdateSuccess() {
+  // TODO: Success toast
+  console.log("Settings update successful");
+}
 
 // set default settings if not set
 if (!getSettings()) {
@@ -212,34 +215,12 @@ if (!getSettings()) {
   updateSettings(defaultSettings);
 }
 
-// state
-let { subreddit, sort, interval } = getSettings();
-
 //update settings input dom with saved settings
 $subredditInput.value = subreddit;
 $sortSelect.value = sort;
 $intervalInput.value = interval;
 
-// For tracking posts
-const showedPosts = {};
-
-// Check if reddit response error
-setTimeout(() => {
-  if (
-    !$postCards.children.length &&
-    !$cardLoading.classList.contains("d-none")
-  ) {
-    // Still loading and no post cards on page
-    $cardLoading.classList.add("d-none");
-    $postCards.insertAdjacentHTML("afterbegin", Components.fatalErrorAlert());
-  }
-}, 10000);
-
 // On update settings
-function settingsUpdateSuccess() {
-  // TODO: Success toast
-  console.log("Settings update successful");
-}
 $settingsForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const subredditName = $settingsForm.subredditName.value;
@@ -266,5 +247,23 @@ $settingsForm.addEventListener("submit", (e) => {
   // start new setInterval
   startUpdatesInterval();
 });
+
+// state
+let { subreddit, sort, interval } = getSettings();
+let intervalTimer = null;
+// For tracking posts
+const showedPosts = {};
+
+// Check if reddit response error
+setTimeout(() => {
+  if (
+    !$postCards.children.length &&
+    !$cardLoading.classList.contains("d-none")
+  ) {
+    // Still loading and no post cards on page
+    $cardLoading.classList.add("d-none");
+    $postCards.insertAdjacentHTML("afterbegin", Components.fatalErrorAlert());
+  }
+}, 10000);
 
 startUpdatesInterval();
