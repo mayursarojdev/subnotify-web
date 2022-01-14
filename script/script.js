@@ -48,6 +48,17 @@ function getPostTemplate(post) {
       ? `<li>🖼️<span class="fw-bold">Preview: </span>${preview}</li>`
       : "";
 
+  // get text of text post
+  let textString = type === "Text" ? Reddit.rtjsonToText(post) : "";
+  // trim length
+  const trimLength = 550;
+  if (textString.length > trimLength) {
+    textString = textString.slice(0, trimLength);
+    textString += "...";
+  }
+  // replace /n with <br>
+  textString = textString.replace(/(\n)+/g, "<br/><br/>");
+
   return `<div class="card shadow-sm overflow-hidden p-0 mb-4 d-flex flex-row">
   <div class="card-left d-none ${preview ? "d-sm-block" : ""} ">
   <a
@@ -62,7 +73,7 @@ function getPostTemplate(post) {
   /></a>
   </div>
 
-  <div class="card-right p-4 py-3">
+  <div class="card-right p-4 py-3 ${!preview ? "w-100" : ""}">
     <div class="card-body">
       <!-- post title -->
       <h5 class="card-title fw-bold">
@@ -79,10 +90,9 @@ function getPostTemplate(post) {
       </ul>
 
       <!-- if post type is text show below -->
-      <!-- <p class="card-text">
-      Some quick example text to build on the card title and make up
-      the bulk of the card's content.
-    </p> -->
+     <p class="card-text">
+      ${textString}
+    </p>
 
       <!-- call to action -->
       <div class="card-links pt-4">
@@ -130,7 +140,7 @@ async function fetchAndShowUpdate() {
     filteredPromotional.posts
   );
   //select first post
-  const postToShow = posts[postIds[0]];
+  const postToShow = posts[postIds[1]];
 
   // TODO: check if it is new post
   const alreadyShowed = (showedPosts[subreddit] || []).includes(postToShow.id);

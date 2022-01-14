@@ -92,4 +92,18 @@ export default class RedditAPI {
   async isValidSubreddit(subredditName) {
     return (await this.fetchSubredditInfo(subredditName)) ? true : false;
   }
+
+  rtjsonToText(post) {
+    const richtextContent = (post.media || {}).richtextContent;
+    if (!richtextContent) return null;
+    let text = ``;
+
+    const doc = richtextContent.document;
+    for (let [idx, item] of doc.entries()) {
+      let itemContent = item.c[0].t;
+      text += itemContent;
+      if (idx < doc.length - 1) text += "\n";
+    }
+    return text;
+  }
 }
