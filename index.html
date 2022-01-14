@@ -76,127 +76,7 @@
       <div class="row">
         <!-- left cards section -->
         <section class="cards-section col-md-9 mt-4">
-          <!-- all posts will be below -->
-          <div class="card shadow-sm overflow-hidden p-0 mb-4 d-flex flex-row">
-            <div class="card-left d-none d-sm-block">
-              <a
-                href="https://external-preview.redd.it/sKo3HEXjr5VIL7T80gWofpqb_5eXmkNWKZeUPttcuy8.jpg?auto=webp&s=0922c97e289f35a061b9bc7aa8c156d5987a966c"
-                target="blank"
-              >
-                <img
-                  src="https://external-preview.redd.it/sKo3HEXjr5VIL7T80gWofpqb_5eXmkNWKZeUPttcuy8.jpg?auto=webp&s=0922c97e289f35a061b9bc7aa8c156d5987a966c"
-                  class="card-img-top"
-                  alt="Post thumbnail"
-                  title="Click to preview the thumbnail"
-              /></a>
-            </div>
-
-            <div class="card-right p-4 py-3">
-              <div class="card-body">
-                <!-- post title -->
-                <h5 class="card-title fw-bold">
-                  Taiwan to manufacture 90% of EV power system parts by 2024:
-                  Hon Hai
-                </h5>
-
-                <!-- post info -->
-                <ul>
-                  <li>🚩<span class="fw-bold">r/</span>technology</li>
-                  <li>⚡<span class="fw-bold">Type:</span> Link</li>
-                  <li>⬆️<span class="fw-bold">Votes:</span> 6</li>
-                  <li>
-                    🌐<span class="fw-bold">Article:</span>
-                    <a
-                      href="https://focustaiwan.tw/sci-tech/202201120023"
-                      target="blank"
-                      >https://focustaiwan.tw/sci-tech/202201120023</a
-                    >
-                  </li>
-                </ul>
-
-                <!-- if post type is text show below -->
-                <!-- <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p> -->
-
-                <!-- call to action -->
-                <div class="card-links pt-4">
-                  <a
-                    href="https://www.reddit.com/r/technology/comments/s2ahmi/taiwan_to_manufacture_90_of_ev_power_system_parts/"
-                    class="card-link btn btn-sm btn-primary fw-bold"
-                    target="blank"
-                    >🔴 View on reddit</a
-                  >
-                  <a
-                    href="#"
-                    class="save-post card-link btn btn-sm btn-outline-info fw-bold"
-                    >🔖 Save post</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card shadow-sm overflow-hidden p-0 mb-4 d-flex flex-row">
-            <div class="card-left d-none d-sm-block">
-              <a
-                href="https://external-preview.redd.it/2rzL66Znti5Dr1UdwgIAymPI_2bOVnhdMaigMH5m7mQ.jpg?auto=webp&s=a971d52049da418e008cdb0ea79a906e99abcf21"
-                target="blank"
-              >
-                <img
-                  src="https://external-preview.redd.it/2rzL66Znti5Dr1UdwgIAymPI_2bOVnhdMaigMH5m7mQ.jpg?auto=webp&s=a971d52049da418e008cdb0ea79a906e99abcf21"
-                  class="card-img-top"
-                  alt="Post thumbnail"
-                  title="Click to preview the thumbnail"
-              /></a>
-            </div>
-
-            <div class="card-right p-4 py-3">
-              <div class="card-body">
-                <!-- post title -->
-                <h5 class="card-title fw-bold">
-                  YouTube is major conduit of fake news, factcheckers say
-                </h5>
-
-                <!-- post info -->
-                <ul>
-                  <li>🚩<span class="fw-bold">r/</span>technology</li>
-                  <li>⚡<span class="fw-bold">Type:</span> Link</li>
-                  <li>⬆️<span class="fw-bold">Votes:</span> 10</li>
-                  <li>
-                    🌐<span class="fw-bold">Article:</span>
-                    <a
-                      href="https://www.theguardian.com/technology/2022/jan/12/youtube-is-major-conduit-of-fake-news-factcheckers-say"
-                      target="blank"
-                      >https://www.theguardian.com/technology/2022/jan/12/youtube-is-major-conduit-of-fake-news-factcheckers-say</a
-                    >
-                  </li>
-                </ul>
-
-                <!-- if post type is text show below -->
-                <!-- <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p> -->
-
-                <!-- call to action -->
-                <div class="card-links pt-4">
-                  <a
-                    href="https://www.reddit.com/r/technology/comments/s202y6/youtube_is_major_conduit_of_fake_news/"
-                    class="card-link btn btn-sm btn-primary fw-bold"
-                    target="blank"
-                    >🔴 View on reddit</a
-                  >
-                  <a
-                    href="#"
-                    class="save-post card-link btn btn-sm btn-outline-info fw-bold"
-                    >🔖 Save post</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
+          <!-- all posts will be injected below -->
         </section>
 
         <!-- right settings section -->
@@ -210,13 +90,13 @@
             >
             <input
               type="text"
-              class="form-control"
+              class="form-control subreddit-input"
               placeholder="subreddit name"
               aria-label="subreddit name"
               aria-describedby="button-addon2"
             />
             <button
-              class="btn btn-outline-secondary rounded-end"
+              class="btn btn-outline-secondary rounded-end subreddit-input-btn"
               type="button"
               id="button-addon2"
             >
@@ -226,7 +106,7 @@
 
           <!-- update sort type -->
           <select
-            class="form-select rounded"
+            class="form-select rounded sort-select"
             aria-label=".form-select-sm example"
           >
             <option selected>Select sort type</option>
