@@ -5,6 +5,7 @@ const Reddit = new RedditAPI();
 const $cardsSection = document.querySelector(".cards-section");
 const $subredditInput = document.querySelector(".subreddit-input");
 const $sortSelect = document.querySelector(".sort-select");
+const $intervalInput = document.querySelector(".interval-input");
 
 function getPostTemplate(post) {
   // extract details
@@ -148,5 +149,6 @@ const { subreddit, sort, interval } = JSON.parse(
 //update settings input dom with saved settings
 $subredditInput.value = subreddit;
 $sortSelect.value = sort;
+$intervalInput.value = interval;
 
 startUpdatesInterval();
