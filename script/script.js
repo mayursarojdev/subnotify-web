@@ -67,9 +67,9 @@ function getPostTemplate(post) {
   // get text of text post
   let textString = type === "Text" ? Reddit.rtjsonToText(post) : "";
   // trim length
-  const trimLength = 550;
-  if (textString.length > trimLength) {
-    textString = textString.slice(0, trimLength);
+  const textTrimLength = 550;
+  if (textString.length > textTrimLength) {
+    textString = textString.slice(0, textTrimLength);
     textString += "...";
   }
   // replace /n with <br>
@@ -140,11 +140,10 @@ function sleep(time) {
 async function fetchAndShowUpdate() {
   // fetch post
   // start loading
-  // const subPosts = await Reddit.fetchSubredditPosts(subreddit, {
-  //   sort,
-  //   limit: 5,
-  // });
-  const subPosts = JSON.parse(localStorage.getItem("linkPosts"));
+  const subPosts = await Reddit.fetchSubredditPosts(subreddit, {
+    sort,
+    limit: 5,
+  });
 
   // remove promotional posts
   const filteredPromotional = Reddit.filterOutPromotionalPosts(
@@ -157,7 +156,7 @@ async function fetchAndShowUpdate() {
     filteredPromotional.posts
   );
   //select first post
-  const postToShow = posts[postIds[1]];
+  const postToShow = posts[postIds[0]];
 
   // TODO: check if it is new post
   const alreadyShowed = (showedPosts[subreddit] || []).includes(postToShow.id);
