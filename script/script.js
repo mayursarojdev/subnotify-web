@@ -3,9 +3,11 @@ const Reddit = new RedditAPI();
 
 // DOM
 const $cardsSection = document.querySelector(".cards-section");
+const $postCards = document.querySelector(".post-cards");
 const $subredditInput = document.querySelector(".subreddit-input");
 const $sortSelect = document.querySelector(".sort-select");
 const $intervalInput = document.querySelector(".interval-input");
+const $cardLoading = document.querySelector(".card-loading");
 
 function getPostTemplate(post) {
   // extract details
@@ -100,8 +102,18 @@ function getPostTemplate(post) {
   </div>
 </div>`;
 }
+
+function sleep(time) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
+}
+
 async function fetchAndShowUpdate() {
   // fetch post
+  // start loading
   const subPosts = await Reddit.fetchSubredditPosts(subreddit, {
     sort,
     limit: 5,
@@ -124,13 +136,22 @@ async function fetchAndShowUpdate() {
   const alreadyShowed = (showedPosts[subreddit] || []).includes(postToShow.id);
 
   if (!alreadyShowed) {
+    $cardLoading.classList.remove("d-none");
+
+    if ($postCards.children.length > 0) {
+      // fake loading card
+      await sleep(2000);
+    }
     // Insert into dom
-    $cardsSection.insertAdjacentHTML("afterbegin", getPostTemplate(postToShow));
+    $postCards.insertAdjacentHTML("afterbegin", getPostTemplate(postToShow));
 
     // add it to showedPosts
     if (!showedPosts[subreddit]) showedPosts[subreddit] = [];
     showedPosts[subreddit].push(postToShow.id);
   } else console.log("No new updates available");
+
+  // remove loading
+  $cardLoading.classList.add("d-none");
 }
 async function startUpdatesInterval() {
   await fetchAndShowUpdate();
