@@ -1,4 +1,6 @@
 import RedditAPI from "./RedditAPI.js";
+import Components from "./components.js";
+
 const Reddit = new RedditAPI();
 
 // DOM
@@ -207,5 +209,16 @@ $sortSelect.value = sort;
 $intervalInput.value = interval;
 
 const showedPosts = {};
+// Check if reddit response error
+setTimeout(() => {
+  if (
+    !$postCards.children.length &&
+    !$cardLoading.classList.contains("d-none")
+  ) {
+    // Still loading and no post cards on page
+    $cardLoading.classList.add("d-none");
+    $postCards.insertAdjacentHTML('afterbegin', Components.fatalErrorAlert());
+  }
+}, 10000);
 
 startUpdatesInterval();
