@@ -104,6 +104,7 @@ async function fetchAndShowUpdate() {
   // fetch post
   const subPosts = await Reddit.fetchSubredditPosts(subreddit, {
     sort,
+    limit: 5,
   });
 
   // remove promotional posts
@@ -129,7 +130,7 @@ async function fetchAndShowUpdate() {
     // add it to showedPosts
     if (!showedPosts[subreddit]) showedPosts[subreddit] = [];
     showedPosts[subreddit].push(postToShow.id);
-  }else console.log('No new updates available');
+  } else console.log("No new updates available");
 }
 async function startUpdatesInterval() {
   await fetchAndShowUpdate();
