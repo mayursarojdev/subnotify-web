@@ -14,8 +14,8 @@ function getPostTemplate(post) {
   const { author, score, title, permalink } = post;
   // Other details
   let type = (post.media || {}).type || "link";
-  const url = (post.source || {}).url;
-  const preview = (post.preview || {}).url;
+  const url = (post.source || {}).url || "";
+  const preview = (post.preview || {}).url || "";
 
   // meaningful type rename
   if (type === "rtjson") type = "text";
@@ -30,6 +30,12 @@ function getPostTemplate(post) {
     ? `<li>⚡<span class="fw-bold">Type: </span>${type}</li>`
     : "";
   const votesString = `<li>⬆️<span class="fw-bold">Votes: </span>${score}</li>`;
+
+  // generate urlString (Article source)
+  // trim url
+  const urlTrimLength = 105;
+  const trimmedUrl =
+    url.length > urlTrimLength ? url.slice(0, urlTrimLength) + "..." : url;
   const urlString =
     url && !isMediaPost
       ? `<li>
@@ -37,15 +43,25 @@ function getPostTemplate(post) {
   <a
     href="${url}"
     target="blank"
-    >${url.slice(0, 103) + "..."}</a
+    >${trimmedUrl}</a
   >
 </li>`
       : "";
 
-  // generate preview only if preview available
+  // generate previewString
+  // trim preview
+  const previewTrimLength = 90;
+  const trimmedPreview =
+    preview.length > previewTrimLength
+      ? preview.slice(0, previewTrimLength) + "..."
+      : preview;
   const previewString =
     preview && isMediaPost
-      ? `<li>🖼️<span class="fw-bold">Preview: </span>${preview}</li>`
+      ? `<li>🖼️<span class="fw-bold">Preview: </span><a
+      href="${preview}"
+      target="blank"
+      >${trimmedPreview}</a
+    ></li>`
       : "";
 
   // get text of text post
@@ -124,10 +140,11 @@ function sleep(time) {
 async function fetchAndShowUpdate() {
   // fetch post
   // start loading
-  const subPosts = await Reddit.fetchSubredditPosts(subreddit, {
-    sort,
-    limit: 5,
-  });
+  // const subPosts = await Reddit.fetchSubredditPosts(subreddit, {
+  //   sort,
+  //   limit: 5,
+  // });
+  const subPosts = JSON.parse(localStorage.getItem("linkPosts"));
 
   // remove promotional posts
   const filteredPromotional = Reddit.filterOutPromotionalPosts(
