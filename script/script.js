@@ -94,58 +94,19 @@ function getPostTemplate(post) {
   // replace /n with <br>
   textString = textString.replace(/(\n)+/g, "<br/><br/>");
 
-  return `<div class="card shadow-sm overflow-hidden p-0 mb-4 d-flex flex-row">
-  <div class="card-left d-none ${preview ? "d-sm-block" : ""} ">
-  <a
-    href="${preview}"
-    target="blank"
-  >
-    <img
-      src="${preview}"
-      class="card-img-top"
-      alt="Post thumbnail"
-      title="Click to preview the thumbnail"
-  /></a>
-  </div>
+  const props = {
+    preview,
+    title,
+    OPString,
+    typeString,
+    votesString,
+    urlString,
+    previewString,
+    textString,
+    permalink,
+  };
 
-  <div class="card-right p-4 py-3 ${!preview ? "w-100" : ""}">
-    <div class="card-body">
-      <!-- post title -->
-      <h5 class="card-title fw-bold">
-        ${title}
-      </h5>
-
-      <!-- post info -->
-      <ul>
-        ${OPString}
-        ${typeString}
-        ${votesString}
-        ${urlString}
-        ${previewString}
-      </ul>
-
-      <!-- if post type is text show below -->
-     <p class="card-text">
-      ${textString}
-    </p>
-
-      <!-- call to action -->
-      <div class="card-links pt-4">
-        <a
-          href="${permalink}"
-          class="card-link btn btn-sm btn-primary fw-bold"
-          target="blank"
-          >🔴 View on reddit</a
-        >
-        <a
-          href="#"
-          class="save-post card-link btn btn-sm btn-outline-info fw-bold"
-          >🔖 Save post</a
-        >
-      </div>
-    </div>
-  </div>
-</div>`;
+  return Components.postCard(props);
 }
 
 function sleep(time) {
