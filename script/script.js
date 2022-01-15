@@ -12,6 +12,7 @@ const Reddit = new RedditAPI();
 // DOM
 const $cardsSection = document.querySelector(".cards-section");
 const $postCards = document.querySelector(".post-cards");
+
 const $cardLoading = document.querySelector(".card-loading");
 const $subredditInput = document.querySelector(".subreddit-input");
 const $subredditNameValidation = document.querySelector(
@@ -22,6 +23,10 @@ const $sortTypeValidation = document.querySelector(".sortTypeValidation");
 const $intervalInput = document.querySelector(".interval-input");
 const $intervalValidation = document.querySelector(".intervalValidation");
 const $settingsForm = document.querySelector(".settings-form");
+
+// Adding components to dom
+$cardsSection.insertAdjacentHTML("afterbegin", Components.fatalErrorAlert());
+const $fatalErrorAlert = document.querySelector(".fatal-error-alert");
 
 function getPostTemplate(post) {
   // extract details
@@ -192,6 +197,7 @@ async function fetchAndShowUpdate() {
 
   // remove loading
   $cardLoading.classList.add("d-none");
+  // remove fatal-alert
 }
 
 async function startUpdatesInterval() {
@@ -306,7 +312,7 @@ setTimeout(() => {
   ) {
     // Still loading and no post cards on page
     $cardLoading.classList.add("d-none");
-    $postCards.insertAdjacentHTML("afterbegin", Components.fatalErrorAlert());
+    $fatalErrorAlert.classList.remove("d-none");
   }
 }, 10000);
 

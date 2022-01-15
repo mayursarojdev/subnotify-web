@@ -1,7 +1,7 @@
 export default {
   fatalErrorAlert() {
     return `<div
-    class="alert alert-danger card p-5 fatal-error-alert"
+    class="alert alert-danger card p-5 fatal-error-alert d-none shadow-sm"
     role="alert"
   >
     <h4 class="alert-heading pb-2">☠️Oops!</h4>
