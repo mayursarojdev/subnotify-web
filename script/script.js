@@ -118,6 +118,21 @@ function sleep(time) {
   });
 }
 
+function showLoading() {
+  $cardLoading.classList.remove("d-none");
+  // track time of loading
+  clearTimeout(loadingTimeout);
+  loadingTimeout = setTimeout(() => {
+    // Still loading and no new post
+    hideLoading();
+    $fatalErrorAlert.classList.remove("d-none");
+  }, loadingTimelimit);
+}
+function hideLoading() {
+  $cardLoading.classList.add("d-none");
+  clearTimeout(loadingTimeout);
+}
+
 async function fetchAndShowUpdate() {
   // fetch post
   const subPosts = await Reddit.fetchSubredditPosts(subreddit, {
@@ -143,8 +158,7 @@ async function fetchAndShowUpdate() {
   const alreadyShowed = (showedPosts[subreddit] || []).includes(postToShow.id);
 
   if (!alreadyShowed) {
-    $cardLoading.classList.remove("d-none");
-
+    showLoading();
     if ($postCards.children.length > 0) {
       // fake loading card
       await sleep(2000);
@@ -158,7 +172,7 @@ async function fetchAndShowUpdate() {
   } else console.log("No new updates available");
 
   // remove loading
-  $cardLoading.classList.add("d-none");
+  hideLoading();
   // remove fatal-alert
   $fatalErrorAlert.classList.add("d-none");
 }
@@ -216,8 +230,12 @@ validateAndSetLSSettings();
 // state
 let { subreddit, sort, interval } = getSettings();
 let intervalTimer = null;
+let loadingTimeout = null;
 // For tracking posts
 const showedPosts = {};
+
+// app setting
+const loadingTimelimit = 10000; // show fatalerror if loading time exceeds
 
 // Event listeners
 // On update settings
@@ -267,16 +285,5 @@ $subredditInput.value = subreddit;
 $sortSelect.value = sort;
 $intervalInput.value = interval;
 
-// Check if reddit response error
-setTimeout(() => {
-  if (
-    !$postCards.children.length &&
-    !$cardLoading.classList.contains("d-none")
-  ) {
-    // Still loading and no post cards on page
-    $cardLoading.classList.add("d-none");
-    $fatalErrorAlert.classList.remove("d-none");
-  }
-}, 20000);
-
+showLoading();
 startUpdatesInterval();
