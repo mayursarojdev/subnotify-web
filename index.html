@@ -145,19 +145,24 @@
                 aria-describedby="button-addon2"
                 required
               />
+              <div class="invalid-feedback subredditNameValidation"></div>
             </div>
 
             <!-- update sort type -->
-            <select
-              class="form-select rounded sort-select mb-3"
-              aria-label=".form-select-sm example"
-              name="sortType"
-            >
-              <option selected>Select sort type</option>
-              <option value="new">new</option>
-              <option value="hot">hot</option>
-              <option value="rising">rising</option>
-            </select>
+            <div class="sort-setting mb-3">
+              <select
+                class="form-select rounded sort-select"
+                aria-label=".form-select-sm example"
+                name="sortType"
+                required
+              >
+                <option selected>Select sort type</option>
+                <option value="new">new</option>
+                <option value="hot">hot</option>
+                <option value="rising">rising</option>
+              </select>
+              <div class="invalid-feedback sortTypeValidation"></div>
+            </div>
 
             <!-- update interval time -->
             <div class="input-group input-group mb-3">
@@ -168,12 +173,15 @@
                 aria-label="get updates every?"
                 aria-describedby="button-addon2"
                 name="updatesInterval"
+                required
               />
               <span
                 class="input-group-text rounded-end"
                 id="inputGroup-sizing-default"
                 >minutes</span
               >
+              <div class="invalid-feedback intervalValidation"></div>
+
             </div>
 
             <!-- update settings button -->

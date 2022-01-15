@@ -1,5 +1,11 @@
 import RedditAPI from "./RedditAPI.js";
 import Components from "./components.js";
+import {
+  isValidSortType,
+  isValidInterval,
+  isValidSubredditName,
+  settingsInputvalidation,
+} from "./validation.js";
 
 const Reddit = new RedditAPI();
 
@@ -8,8 +14,13 @@ const $cardsSection = document.querySelector(".cards-section");
 const $postCards = document.querySelector(".post-cards");
 const $cardLoading = document.querySelector(".card-loading");
 const $subredditInput = document.querySelector(".subreddit-input");
+const $subredditNameValidation = document.querySelector(
+  ".subredditNameValidation"
+);
 const $sortSelect = document.querySelector(".sort-select");
+const $sortTypeValidation = document.querySelector(".sortTypeValidation");
 const $intervalInput = document.querySelector(".interval-input");
+const $intervalValidation = document.querySelector(".intervalValidation");
 const $settingsForm = document.querySelector(".settings-form");
 
 function getPostTemplate(post) {
@@ -223,13 +234,27 @@ const showedPosts = {};
 
 // Event listeners
 // On update settings
-$settingsForm.addEventListener("submit", (e) => {
+$settingsForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const subredditName = $settingsForm.subredditName.value;
   const sortType = $settingsForm.sortType.value;
   const updatesInterval = parseInt($settingsForm.updatesInterval.value);
 
-  // TODO: validation
+  // validate user input settings
+  const validationSuccess = await settingsInputvalidation(
+    subredditName,
+    sortType,
+    updatesInterval,
+    {
+      $sortTypeValidation,
+      $sortSelect,
+      $intervalValidation,
+      $intervalInput,
+      $subredditNameValidation,
+      $subredditInput,
+    }
+  );
+  if (!validationSuccess) return;
 
   const newSettings = {
     subreddit: subredditName,
