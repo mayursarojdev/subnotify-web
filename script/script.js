@@ -44,6 +44,7 @@ function getPostTemplate(post) {
   const isMediaPost =
     type === "Image" || type === "Video" || type === "Gallery" ? true : false;
 
+  const subredditString = `<li class="fw-bold">🚩r/<a href="https://www.reddit.com/r/${subreddit}" target='blank'>${subreddit}</a></li>`;
   const OPString = `<li>🙂<span class="fw-bold">OP: </span><a href="https://www.reddit.com/u/${author}" target='blank'>${author}</a></li>`;
   let typeString = type
     ? `<li>⚡<span class="fw-bold">Type: </span>${type}</li>`
@@ -97,6 +98,7 @@ function getPostTemplate(post) {
   const props = {
     preview,
     title,
+    subredditString,
     OPString,
     typeString,
     votesString,
@@ -105,7 +107,6 @@ function getPostTemplate(post) {
     textString,
     permalink,
   };
-
   return Components.postCard(props);
 }
 
@@ -276,6 +277,6 @@ setTimeout(() => {
     $cardLoading.classList.add("d-none");
     $fatalErrorAlert.classList.remove("d-none");
   }
-}, 10000);
+}, 20000);
 
 startUpdatesInterval();

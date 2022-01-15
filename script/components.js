@@ -9,10 +9,12 @@ export default {
     <p>Please try again after some time.</p>
   </div>`;
   },
+
   postCard(props) {
     const {
       preview,
       title,
+      subredditString,
       OPString,
       typeString,
       votesString,
@@ -44,6 +46,7 @@ export default {
 
         <!-- post info -->
         <ul>
+          ${subredditString}
           ${OPString}
           ${typeString}
           ${votesString}
