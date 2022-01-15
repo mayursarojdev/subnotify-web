@@ -195,6 +195,9 @@ async function fetchAndShowUpdate() {
 }
 
 async function startUpdatesInterval() {
+  // Validate settings in localstorage
+  validateAndSetLSSettings();
+
   // To clear all previous intervals
   clearInterval(intervalTimer);
   await fetchAndShowUpdate();
@@ -215,16 +218,31 @@ function settingsUpdateSuccess() {
   // TODO: Success toast
   console.log("Settings update successful");
 }
-
-// set default settings if not set
-if (!getSettings()) {
+function validateAndSetLSSettings() {
   const defaultSettings = {
     subreddit: "technology",
     sort: "new",
     interval: 2, //in minutes
   };
-  updateSettings(defaultSettings);
+  const { subreddit, sort, interval } = getSettings() || {};
+  // validations
+  const validatedSettings = {};
+  // only checking if subreddit not empty to avoid extra Reddit api call
+  if (!subreddit) validatedSettings.subreddit = defaultSettings.subreddit;
+  else validatedSettings.subreddit = subreddit;
+
+  if (!isValidSortType(sort).isValid)
+    validatedSettings.sort = defaultSettings.sort;
+  else validatedSettings.sort = sort;
+
+  if (!isValidInterval(interval).isValid)
+    validatedSettings.interval = defaultSettings.interval;
+  else validatedSettings.interval = interval;
+
+  updateSettings(validatedSettings);
 }
+
+validateAndSetLSSettings();
 
 // state
 let { subreddit, sort, interval } = getSettings();
