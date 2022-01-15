@@ -198,6 +198,7 @@ async function fetchAndShowUpdate() {
   // remove loading
   $cardLoading.classList.add("d-none");
   // remove fatal-alert
+  $fatalErrorAlert.classList.add("d-none");
 }
 
 async function startUpdatesInterval() {
