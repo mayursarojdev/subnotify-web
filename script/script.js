@@ -110,6 +110,10 @@ function hideLoading() {
 }
 
 async function fetchAndShowUpdate() {
+  function postIsShowed(post) {
+    return (showedPosts[subreddit] || []).includes(post.id);
+  }
+
   // fetch post
   const subPosts = await Reddit.fetchSubredditPosts(subreddit, {
     sort,
@@ -127,24 +131,31 @@ async function fetchAndShowUpdate() {
     filteredPromotional.posts
   );
 
-  //select first post
-  const postToShow = posts[postIds[0]];
+  // filter out showed post ids
+  let postIdsToShow = postIds.filter(
+    (postId) => !postIsShowed(posts[postId])
+  );
 
-  // check if it is new post
-  const alreadyShowed = (showedPosts[subreddit] || []).includes(postToShow.id);
+  // slice noOfPosts to show
+  postIdsToShow = postIdsToShow.slice(0, noOfNewPostsToShow)
 
-  if (!alreadyShowed) {
+  if (postIdsToShow.length) {
+    // new updates available
     showLoading();
     if ($postCards.children.length > 0) {
       // fake loading card
       await sleep(2000);
     }
-    // Insert into dom
-    $postCards.insertAdjacentHTML("afterbegin", getPostTemplate(postToShow));
+    // loop over all new updates and show in dom
+    for (let postIdToShow of postIdsToShow) {
+      const postToShow = posts[postIdToShow];
+      // Insert into dom
+      $postCards.insertAdjacentHTML("afterbegin", getPostTemplate(postToShow));
 
-    // add it to showedPosts
-    if (!showedPosts[subreddit]) showedPosts[subreddit] = [];
-    showedPosts[subreddit].push(postToShow.id);
+      // add it to showedPosts
+      if (!showedPosts[subreddit]) showedPosts[subreddit] = [];
+      showedPosts[subreddit].push(postToShow.id);
+    }
   } else console.log("No new updates available");
 
   // remove loading
@@ -212,6 +223,8 @@ const showedPosts = {};
 
 // app setting
 const loadingTimelimit = 10000; // show fatalerror if loading time exceeds
+const noOfNewPostsToShow = 3; // no of new posts to show at a time
+
 
 // Event listeners
 // On update settings
