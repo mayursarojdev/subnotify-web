@@ -9,6 +9,17 @@ export default {
     <p>Please try again after some time.</p>
   </div>`;
   },
+  noPostOnSubredditAlert() {
+    return `<div
+    class="alert alert-warning card p-5 noPostOnSubredditAlert d-none shadow-sm"
+    role="alert"
+  >
+    <h4 class="alert-heading pb-2">
+      ⚠️No posts are currently available on this subreddit
+    </h4>
+    <p>All new updates will be shown after they are available.</p>
+  </div>`;
+  },
 
   postCard(props) {
     const {

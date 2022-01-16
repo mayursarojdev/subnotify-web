@@ -26,7 +26,14 @@ const $settingsForm = document.querySelector(".settings-form");
 
 // Adding components to dom
 $cardsSection.insertAdjacentHTML("afterbegin", Components.fatalErrorAlert());
+$cardsSection.insertAdjacentHTML(
+  "afterbegin",
+  Components.noPostOnSubredditAlert()
+);
 const $fatalErrorAlert = document.querySelector(".fatal-error-alert");
+const $noPostOnSubredditAlert = document.querySelector(
+  ".noPostOnSubredditAlert"
+);
 
 function getPostTemplate(post) {
   // extract details
@@ -137,10 +144,17 @@ async function fetchAndShowUpdate() {
   // slice noOfPosts to show
   postIdsToShow = postIdsToShow.slice(0, noOfNewPostsToShow);
 
+  // check if previous post cards exist
+  const postCardsExists = $postCards.children.length > 0;
+
+  // check if subreddit has posts
+  const noPostOnSubreddit = !postCardsExists && !postIdsToShow.length;
+  if (noPostOnSubreddit) $noPostOnSubredditAlert.classList.remove("d-none");
+
   if (postIdsToShow.length) {
     // new updates available
     showLoading();
-    if ($postCards.children.length > 0) {
+    if (postCardsExists) {
       // fake loading card
       await sleep(2000);
     }
@@ -154,6 +168,9 @@ async function fetchAndShowUpdate() {
       if (!showedPosts[subreddit]) showedPosts[subreddit] = [];
       showedPosts[subreddit].push(postToShow.id);
     }
+
+    // remove no posts alert after postcard inserted
+    $noPostOnSubredditAlert.classList.add("d-none");
   } else console.log("No new updates available");
 
   // remove loading
