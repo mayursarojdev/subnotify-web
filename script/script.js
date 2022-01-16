@@ -132,12 +132,10 @@ async function fetchAndShowUpdate() {
   );
 
   // filter out showed post ids
-  let postIdsToShow = postIds.filter(
-    (postId) => !postIsShowed(posts[postId])
-  );
+  let postIdsToShow = postIds.filter((postId) => !postIsShowed(posts[postId]));
 
   // slice noOfPosts to show
-  postIdsToShow = postIdsToShow.slice(0, noOfNewPostsToShow)
+  postIdsToShow = postIdsToShow.slice(0, noOfNewPostsToShow);
 
   if (postIdsToShow.length) {
     // new updates available
@@ -211,6 +209,11 @@ function validateAndSetLSSettings() {
 
   updateSettings(validatedSettings);
 }
+function fillSettingsInput(subreddit, sort, interval) {
+  $subredditInput.value = subreddit;
+  $sortSelect.value = sort;
+  $intervalInput.value = interval;
+}
 
 validateAndSetLSSettings();
 
@@ -224,7 +227,6 @@ const showedPosts = {};
 // app setting
 const loadingTimelimit = 10000; // show fatalerror if loading time exceeds
 const noOfNewPostsToShow = 3; // no of new posts to show at a time
-
 
 // Event listeners
 // On update settings
@@ -270,9 +272,7 @@ $settingsForm.addEventListener("submit", async (e) => {
 });
 
 //update settings input dom with saved settings
-$subredditInput.value = subreddit;
-$sortSelect.value = sort;
-$intervalInput.value = interval;
+fillSettingsInput(subreddit, sort, interval);
 
 showLoading();
 startUpdatesInterval();
