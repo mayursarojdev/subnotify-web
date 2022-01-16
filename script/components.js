@@ -39,8 +39,8 @@ export default {
     /></a>
     </div>
 
-    <div class="card-right p-4 py-3 ${!preview ? "w-100" : ""}">
-      <div class="card-body">
+    <div class="card-right d-flex p-4 py-3 ${!preview ? "w-100" : ""}">
+      <div class="card-body d-flex flex-column justify-content-around">
         <!-- post title -->
         <h5 class="card-title fw-bold">
           ${title}
