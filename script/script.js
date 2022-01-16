@@ -143,6 +143,8 @@ async function fetchAndShowUpdate() {
 
   // slice noOfPosts to show
   postIdsToShow = postIdsToShow.slice(0, noOfNewPostsToShow);
+  // reverse the array so old posts are inserted first and new post cards are inserted over it
+  postIdsToShow.reverse();
 
   // check if previous post cards exist
   const postCardsExists = $postCards.children.length > 0;
@@ -292,4 +294,4 @@ $settingsForm.addEventListener("submit", async (e) => {
 fillSettingsInput(subreddit, sort, interval);
 
 showLoading();
-startUpdatesInterval();
+// startUpdatesInterval();
