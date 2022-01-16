@@ -44,29 +44,11 @@ function getPostTemplate(post) {
   const isMediaPost =
     type === "Image" || type === "Video" || type === "Gallery" ? true : false;
 
-  const subredditString = `<li class="fw-bold">🚩r/<a href="https://www.reddit.com/r/${subreddit}" target='blank'>${subreddit}</a></li>`;
-  const OPString = `<li>🙂<span class="fw-bold">OP: </span><a href="https://www.reddit.com/u/${author}" target='blank'>${author}</a></li>`;
-  let typeString = type
-    ? `<li>⚡<span class="fw-bold">Type: </span>${type}</li>`
-    : "";
-  const votesString = `<li>⬆️<span class="fw-bold">Votes: </span>${score}</li>`;
-
   // generate urlString (Article source)
   // trim url
   const urlTrimLength = 105;
   const trimmedUrl =
     url.length > urlTrimLength ? url.slice(0, urlTrimLength) + "..." : url;
-  const urlString =
-    url && !isMediaPost
-      ? `<li>
-  🌐<span class="fw-bold">Article:</span>
-  <a
-    href="${url}"
-    target="blank"
-    >${trimmedUrl}</a
-  >
-</li>`
-      : "";
 
   // generate previewString
   // trim preview
@@ -75,36 +57,30 @@ function getPostTemplate(post) {
     preview.length > previewTrimLength
       ? preview.slice(0, previewTrimLength) + "..."
       : preview;
-  const previewString =
-    preview && isMediaPost
-      ? `<li>🖼️<span class="fw-bold">Preview: </span><a
-      href="${preview}"
-      target="blank"
-      >${trimmedPreview}</a
-    ></li>`
-      : "";
 
   // get text of text post
-  let textString = type === "Text" ? Reddit.rtjsonToText(post) : "";
+  let text = type === "Text" ? Reddit.rtjsonToText(post) : "";
   // trim length
   const textTrimLength = 550;
-  if (textString.length > textTrimLength) {
-    textString = textString.slice(0, textTrimLength);
-    textString += "...";
+  if (text.length > textTrimLength) {
+    text = text.slice(0, textTrimLength);
+    text += "...";
   }
   // replace /n with <br>
-  textString = textString.replace(/(\n)+/g, "<br/><br/>");
+  text = text.replace(/(\n)+/g, "<br/><br/>");
 
   const props = {
-    preview,
     title,
-    subredditString,
-    OPString,
-    typeString,
-    votesString,
-    urlString,
-    previewString,
-    textString,
+    subreddit,
+    author,
+    type,
+    score,
+    url,
+    trimmedUrl,
+    isMediaPost,
+    preview,
+    trimmedPreview,
+    text,
     permalink,
   };
   return Components.postCard(props);

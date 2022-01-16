@@ -12,15 +12,17 @@ export default {
 
   postCard(props) {
     const {
-      preview,
       title,
-      subredditString,
-      OPString,
-      typeString,
-      votesString,
-      urlString,
-      previewString,
-      textString,
+      subreddit,
+      author,
+      type,
+      score,
+      url,
+      trimmedUrl,
+      isMediaPost,
+      preview,
+      trimmedPreview,
+      text,
       permalink,
     } = props;
     return `<div class="card shadow-sm overflow-hidden p-0 mb-4 d-flex flex-row">
@@ -46,17 +48,41 @@ export default {
 
         <!-- post info -->
         <ul>
-          ${subredditString}
-          ${OPString}
-          ${typeString}
-          ${votesString}
-          ${urlString}
-          ${previewString}
+        <li class="fw-bold">🚩r/<a href="https://www.reddit.com/r/${subreddit}" target='blank'>${subreddit}</a></li>
+
+        <li>🙂<span class="fw-bold">OP: </span><a href="https://www.reddit.com/u/${author}" target='blank'>${author}</a></li>
+
+        ${type ? `<li>⚡<span class="fw-bold">Type: </span>${type}</li>` : ""}
+
+        <li>⬆️<span class="fw-bold">Votes: </span>${score}</li>
+
+        ${
+          url && !isMediaPost
+            ? `<li>
+        🌐<span class="fw-bold">Article:</span>
+        <a
+          href="${url}"
+          target="blank"
+          >${trimmedUrl}</a
+        >
+      </li>`
+            : ""
+        }
+
+        ${
+          preview && isMediaPost
+            ? `<li>🖼️<span class="fw-bold">Preview: </span><a
+            href="${preview}"
+            target="blank"
+            >${trimmedPreview}</a
+          ></li>`
+            : ""
+        }
         </ul>
 
         <!-- if post type is text show below -->
        <p class="card-text">
-        ${textString}
+        ${text}
       </p>
 
         <!-- call to action -->
