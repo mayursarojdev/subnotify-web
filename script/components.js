@@ -81,7 +81,7 @@ export default {
         </ul>
 
         <!-- if post type is text show below -->
-       <p class="card-text">
+       <p class="card-text pt-2 m-0">
         ${text}
       </p>
 
