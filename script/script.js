@@ -244,7 +244,7 @@ let loadingTimeout = null;
 const showedPosts = {};
 
 // app setting
-const loadingTimelimit = 10000; // show fatalerror if loading time exceeds
+const loadingTimelimit = 15000; // show fatalerror if loading time exceeds
 const noOfNewPostsToShow = 3; // no of new posts to show at a time
 
 // Event listeners
