@@ -294,4 +294,4 @@ $settingsForm.addEventListener("submit", async (e) => {
 fillSettingsInput(subreddit, sort, interval);
 
 showLoading();
-// startUpdatesInterval();
+startUpdatesInterval();
